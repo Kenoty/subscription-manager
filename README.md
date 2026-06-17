@@ -4,7 +4,7 @@ Subscription Manager — платформа для управления подп
 
 # Sonar Cloud
 
-[Ссылка]()
+[Ссылка](https://sonarcloud.io/project/overview?id=Kenoty_subscription-manager)
 
 # Оценка времени
 
