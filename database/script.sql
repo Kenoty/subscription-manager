@@ -92,7 +92,7 @@ CREATE TABLE device_type (
 );
 
 CREATE TABLE device (
-    id UUID  PRIMARY KEY,
+    id UUID PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
     type_id INT NOT NULL REFERENCES device_type(id) ON DELETE RESTRICT,
     note TEXT
