@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS plan;
 DROP TABLE IF EXISTS billing_period;
 DROP TABLE IF EXISTS service;
-DROP TABLE IF EXISTS "user";
+DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS role;
 
 CREATE TABLE role (
@@ -17,7 +17,7 @@ CREATE TABLE role (
     name VARCHAR(32) UNIQUE NOT NULL
 );
 
-CREATE TABLE "user" (
+CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     role_id INT NOT NULL REFERENCES role(id) ON DELETE RESTRICT,
     first_name VARCHAR(64) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE plan (
 
 CREATE TABLE subscription (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     plan_id INT NOT NULL REFERENCES plan(id) ON DELETE RESTRICT,
     auto_renew BOOLEAN NOT NULL DEFAULT TRUE
 );
@@ -72,7 +72,6 @@ CREATE TABLE subscription_event (
 
 CREATE TABLE payment (
     id SERIAL PRIMARY KEY,
-    subscription_id INT NOT NULL REFERENCES subscription(id) ON DELETE RESTRICT,
     event_id INT REFERENCES subscription_event(id) ON DELETE RESTRICT,
     amount NUMERIC(10,2) NOT NULL,
     currency VARCHAR(3) NOT NULL,
@@ -81,10 +80,9 @@ CREATE TABLE payment (
 
 CREATE TABLE notification (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
-    subscription_id INT NOT NULL REFERENCES subscription(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     message TEXT NOT NULL,
-    is_read BOOLEAN DEFAULT FALSE,
+    is_unread BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -94,15 +92,14 @@ CREATE TABLE device_type (
 );
 
 CREATE TABLE device (
-    id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+    id UUID  PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
     type_id INT NOT NULL REFERENCES device_type(id) ON DELETE RESTRICT,
     note TEXT
 );
 
 CREATE TABLE subscription_device (
-    device_id INT NOT NULL REFERENCES device(id) ON DELETE CASCADE, 
+    device_id UUID NOT NULL REFERENCES device(id) ON DELETE CASCADE, 
     subscription_id INT NOT NULL REFERENCES subscription(id) ON DELETE CASCADE,
     PRIMARY KEY (device_id, subscription_id),
     added_at TIMESTAMPTZ DEFAULT NOW(),
