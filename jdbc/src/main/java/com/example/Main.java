@@ -1,17 +1,21 @@
 package com.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.example.menu.MainMenu;
+import com.example.util.DatabaseConnection;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        try (Connection conn = DatabaseConnection.getConnection();
+             Scanner scanner = new Scanner(System.in)) {
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+            new MainMenu(scanner, conn).show();
+
+        } catch (SQLException e) {
+            System.out.println("Connection error: " + e.getMessage());
         }
     }
 }
