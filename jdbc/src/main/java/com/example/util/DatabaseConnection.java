@@ -10,9 +10,9 @@ import java.util.Properties;
 
 public class DatabaseConnection {
 
-    private static final String url;
-    private static final String user;
-    private static final String password;
+    private static final String URL;
+    private static final String USER;
+    private static final String PASSWORD;
 
     static {
         Properties env = new Properties();
@@ -21,16 +21,16 @@ public class DatabaseConnection {
         } catch (IOException e) {
             System.out.println("Error loading .env: " + e.getMessage());
         }
-        url = String.format("jdbc:postgresql://%s:%s/%s",
+        URL = String.format("jdbc:postgresql://%s:%s/%s",
                 env.getProperty("DB_HOST"),
                 env.getProperty("DB_PORT"),
                 env.getProperty("DB_NAME"));
-        user = env.getProperty("DB_USER");
-        password = env.getProperty("DB_PASSWORD");
+        USER = env.getProperty("DB_USER");
+        PASSWORD = env.getProperty("DB_PASSWORD");
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(url, user, password);
+        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
 }
