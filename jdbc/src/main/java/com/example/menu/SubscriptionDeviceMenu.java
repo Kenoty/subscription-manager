@@ -46,7 +46,7 @@ public class SubscriptionDeviceMenu {
         int deviceId = scanner.nextInt();
         System.out.print("Subscription id: ");
         int subscriptionId = scanner.nextInt();
-        dao.create(new SubscriptionDevice(deviceId, subscriptionId, OffsetDateTime.now(), null));
+        dao.create(new SubscriptionDevice(deviceId, subscriptionId, OffsetDateTime.now(ZoneId.systemDefault()), null));
         System.out.println("Created successfully");
     }
 
