@@ -20,11 +20,13 @@ public class User {
     }
 
     public User(Integer id, Integer roleId, String firstName, String lastName, String email, String passwordHash, OffsetDateTime createdAt) {
+        this.id = id;
         this.roleId = roleId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.passwordHash = passwordHash;
+        this.createdAt = createdAt;
     }
 
     public Integer getId() {
