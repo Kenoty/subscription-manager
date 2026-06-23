@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS subscription;
 DROP TABLE IF EXISTS plan;
 DROP TABLE IF EXISTS billing_period;
 DROP TABLE IF EXISTS service;
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS "user";
 DROP TABLE IF EXISTS role;
 
 CREATE TABLE role (
@@ -17,7 +17,7 @@ CREATE TABLE role (
     name VARCHAR(32) UNIQUE NOT NULL
 );
 
-CREATE TABLE users (
+CREATE TABLE "user" (
     id SERIAL PRIMARY KEY,
     role_id INT NOT NULL REFERENCES role(id) ON DELETE RESTRICT,
     first_name VARCHAR(64) NOT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE plan (
 
 CREATE TABLE subscription (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
     plan_id INT NOT NULL REFERENCES plan(id) ON DELETE RESTRICT,
     auto_renew BOOLEAN NOT NULL DEFAULT TRUE
 );
@@ -80,7 +80,7 @@ CREATE TABLE payment (
 
 CREATE TABLE notification (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
     message TEXT NOT NULL,
     is_unread BOOLEAN DEFAULT TRUE,
     created_at TIMESTAMPTZ DEFAULT NOW()
@@ -92,7 +92,7 @@ CREATE TABLE device_type (
 );
 
 CREATE TABLE device (
-    id UUID PRIMARY KEY,
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
     type_id INT NOT NULL REFERENCES device_type(id) ON DELETE RESTRICT,
     note TEXT
