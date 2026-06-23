@@ -5,6 +5,7 @@ import com.example.model.SubscriptionDevice;
 
 import java.sql.Connection;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Scanner;
 
@@ -82,7 +83,7 @@ public class SubscriptionDeviceMenu {
         if (subscriptionDevice == null) { System.out.println("Not found"); return; }
         System.out.print("Set removed at now? (true/false): ");
         if (scanner.nextBoolean()) {
-            subscriptionDevice.setRemovedAt(OffsetDateTime.now());
+            subscriptionDevice.setRemovedAt(OffsetDateTime.now(ZoneId.systemDefault()));
         }
         dao.update(subscriptionDevice);
         System.out.println("Updated successfully");
