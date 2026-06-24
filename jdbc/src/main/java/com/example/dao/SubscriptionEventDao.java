@@ -41,6 +41,7 @@ public class SubscriptionEventDao {
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     return new SubscriptionEvent(
+                            resultSet.getInt("id"),
                             resultSet.getInt("subscription_id"),
                             resultSet.getInt("event_id"),
                             resultSet.getObject("event_date", LocalDate.class),
@@ -64,6 +65,7 @@ public class SubscriptionEventDao {
 
             while (resultSet.next()) {
                 list.add(new SubscriptionEvent(
+                        resultSet.getInt("id"),
                         resultSet.getInt("subscription_id"),
                         resultSet.getInt("event_id"),
                         resultSet.getObject("event_date", LocalDate.class),
