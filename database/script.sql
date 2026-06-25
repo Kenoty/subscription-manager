@@ -72,7 +72,7 @@ CREATE TABLE subscription_event (
 
 CREATE TABLE payment (
     id SERIAL PRIMARY KEY,
-    event_id INT REFERENCES subscription_event(id) ON DELETE RESTRICT,
+    event_id INT NOT NULL REFERENCES subscription_event(id) ON DELETE RESTRICT,
     amount NUMERIC(10,2) NOT NULL,
     currency VARCHAR(3) NOT NULL,
     paid_at TIMESTAMPTZ DEFAULT NOW()
