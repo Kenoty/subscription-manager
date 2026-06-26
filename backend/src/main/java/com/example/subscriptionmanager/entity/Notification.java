@@ -35,6 +35,6 @@ public class Notification {
     @Column(name = "is_unread")
     private Boolean isUnread;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", insertable = false, updatable = false)
     private OffsetDateTime createdAt;
 }

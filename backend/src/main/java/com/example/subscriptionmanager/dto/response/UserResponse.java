@@ -1,6 +1,7 @@
 package com.example.subscriptionmanager.dto.response;
 
 import lombok.Data;
+import java.time.OffsetDateTime;
 
 @Data
 public class UserResponse {
@@ -8,4 +9,6 @@ public class UserResponse {
     private String firstName;
     private String lastName;
     private String email;
+    private String role;
+    private OffsetDateTime createdAt;
 }

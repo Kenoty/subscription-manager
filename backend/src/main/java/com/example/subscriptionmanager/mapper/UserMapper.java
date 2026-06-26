@@ -1,6 +1,6 @@
 package com.example.subscriptionmanager.mapper;
 
-import com.example.subscriptionmanager.dto.request.CreateUserRequest;
+import com.example.subscriptionmanager.dto.request.RegisterRequest;
 import com.example.subscriptionmanager.dto.request.UpdateUserRequest;
 import com.example.subscriptionmanager.dto.response.UserResponse;
 import com.example.subscriptionmanager.entity.Role;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public User toEntity(CreateUserRequest request, Role role) {
+    public User toEntity(RegisterRequest request, Role role) {
         User user = new User();
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -20,16 +20,18 @@ public class UserMapper {
     }
 
     public void updateEntity(User user, UpdateUserRequest request) {
-        if(request.getFirstName() != null) user.setFirstName(request.getFirstName());
-        if(request.getLastName() != null) user.setLastName(request.getLastName());
+        if (request.getFirstName() != null) user.setFirstName(request.getFirstName());
+        if (request.getLastName() != null) user.setLastName(request.getLastName());
     }
 
     public UserResponse toResponse(User user) {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setId(user.getId());
-        userResponse.setFirstName(user.getFirstName());
-        userResponse.setLastName(user.getLastName());
-        userResponse.setEmail(user.getEmail());
-        return userResponse;
+        UserResponse response = new UserResponse();
+        response.setId(user.getId());
+        response.setFirstName(user.getFirstName());
+        response.setLastName(user.getLastName());
+        response.setEmail(user.getEmail());
+        response.setRole(user.getRole().getName());
+        response.setCreatedAt(user.getCreatedAt());
+        return response;
     }
 }

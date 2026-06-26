@@ -36,7 +36,7 @@ public class Payment {
     @Column(name = "currency", nullable = false, length = 3)
     private String currency;
 
-    @Column(name = "paid_at")
+    @Column(name = "paid_at", insertable = false, updatable = false)
     private OffsetDateTime paidAt;
 
 }
