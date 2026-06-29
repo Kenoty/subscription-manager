@@ -94,6 +94,7 @@ CREATE TABLE device_type (
 CREATE TABLE device (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
+    user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
     type_id INT NOT NULL REFERENCES device_type(id) ON DELETE RESTRICT,
     note TEXT
 );
@@ -223,17 +224,17 @@ INSERT INTO device_type (name) VALUES
     ('smartwatch'),
     ('streaming_stick');
 
-INSERT INTO device (id, name, type_id, note) VALUES
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Alice iPhone 15',    1, 'Primary phone'),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 'Bob MacBook Pro',    3, 'Work laptop'),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 'Carol iPad Air',     2, NULL),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14', 'David Samsung TV',   5, 'Living room TV'),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15', 'Eva Surface Pro',    3, 'Home laptop'),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a16', 'Frank PS5',          6, NULL),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a17', 'Grace Pixel 8',      1, 'Personal phone'),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a18', 'Henry Desktop PC',   4, 'Gaming rig'),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a19', 'Irene Kindle',       7, NULL),
-    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a20', 'Jack Chromecast',    9, 'Bedroom TV stick');
+INSERT INTO device (id, name, user_id, type_id, note) VALUES
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Alice iPhone 15',    1,  1, 'Primary phone'),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 'Bob MacBook Pro',    2,  3, 'Work laptop'),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 'Carol iPad Air',     3,  2, NULL),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a14', 'David Samsung TV',   4,  5, 'Living room TV'),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15', 'Eva Surface Pro',    5,  3, 'Home laptop'),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a16', 'Frank PS5',          6,  6, NULL),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a17', 'Grace Pixel 8',      7,  1, 'Personal phone'),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a18', 'Henry Desktop PC',   8,  4, 'Gaming rig'),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a19', 'Irene Kindle',       9,  7, NULL),
+    ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a20', 'Jack Chromecast',    10, 9, 'Bedroom TV stick');
 
 INSERT INTO subscription_device (device_id, subscription_id, added_at, removed_at) VALUES
     ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 1,  '2025-01-15 09:10:00+00', NULL),
