@@ -5,6 +5,7 @@ import com.example.subscriptionmanager.dto.request.UpdateDeviceRequest;
 import com.example.subscriptionmanager.dto.response.DeviceResponse;
 import com.example.subscriptionmanager.entity.Device;
 import com.example.subscriptionmanager.entity.DeviceType;
+import com.example.subscriptionmanager.entity.User;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,10 +20,11 @@ public class DeviceMapper {
         return response;
     }
 
-    public Device toEntity(CreateDeviceRequest request, DeviceType type) {
+    public Device toEntity(CreateDeviceRequest request, DeviceType type, User user) {
         Device device = new Device();
         device.setName(request.getName());
         device.setDeviceType(type);
+        device.setUser(user);
         device.setNote(request.getNote());
         return device;
     }

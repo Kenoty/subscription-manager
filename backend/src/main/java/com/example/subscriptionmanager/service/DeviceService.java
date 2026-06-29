@@ -25,11 +25,12 @@ public class DeviceService {
     private final DeviceTypeRepository deviceTypeRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final SubscriptionDeviceRepository subscriptionDeviceRepository;
+    private final UserRepository userRepository;
     private final DeviceMapper deviceMapper;
     private final CurrentUserProvider currentUserProvider;
 
     public List<DeviceResponse> getMyDevices() {
-        return deviceRepository.findActiveDevicesByUserId(currentUserProvider.getCurrentUserId())
+        return deviceRepository.findByUserId(currentUserProvider.getCurrentUserId())
                 .stream().map(deviceMapper::toResponse).toList();
     }
 
@@ -41,7 +42,9 @@ public class DeviceService {
     public DeviceResponse create(CreateDeviceRequest request) {
         DeviceType type = deviceTypeRepository.findById(request.getTypeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Device type not found"));
-        Device device = deviceMapper.toEntity(request, type);
+        User user = userRepository.findById(currentUserProvider.getCurrentUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        Device device = deviceMapper.toEntity(request, type, user);
         device.setId(UUID.randomUUID());
         return deviceMapper.toResponse(deviceRepository.save(device));
     }

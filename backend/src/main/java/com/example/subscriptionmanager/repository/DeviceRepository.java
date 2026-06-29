@@ -9,6 +9,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DeviceRepository extends JpaRepository<Device, UUID> {
-    @Query("SELECT sd.device FROM SubscriptionDevice sd WHERE sd.subscription.user.id = :userId AND sd.removedAt IS NULL")
-    List<Device> findActiveDevicesByUserId(@Param("userId") Integer userId);
+    List<Device> findByUserId(Integer userId);
 }

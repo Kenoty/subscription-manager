@@ -32,7 +32,7 @@ public class Notification {
     @Column(name = "message", nullable = false)
     private String message;
 
-    @Column(name = "is_unread")
+    @Column(name = "is_unread", insertable = false)
     private Boolean isUnread;
 
     @Column(name = "created_at", insertable = false, updatable = false)

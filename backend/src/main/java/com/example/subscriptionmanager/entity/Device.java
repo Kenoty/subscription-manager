@@ -27,6 +27,10 @@ public class Device {
     private String name;
 
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)
     private DeviceType deviceType;
 

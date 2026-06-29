@@ -33,7 +33,7 @@ public class SubscriptionDevice {
     @JoinColumn(name = "subscription_id", nullable = false)
     private Subscription subscription;
 
-    @Column(name = "added_at")
+    @Column(name = "added_at", insertable = false)
     private OffsetDateTime addedAt;
 
     @Column(name = "removed_at")
