@@ -20,3 +20,29 @@ Subscription Manager — платформа для управления подп
 # Запуск jdbc/backend проекта
 
 Для запуска jdbc/backend проекта необходимо переименовать файл .env.example в .env и заполнить параметры бд.
+
+# Запуск React проекта 
+
+Для запуска проекта нужно выболнить следующее:
+
+```bash
+cd React
+npm install
+npm run dev
+```
+
+Приложение запустится на http://localhost:3000.  
+Бекенд ожидается на http://localhost:8080 — прокси настроен в `vite.config.js`.
+
+# Запуск Angular проекта 
+
+Для запуска проекта нужно выболнить следующее:
+
+```bash
+cd Angular
+npm install
+npm start
+```
+
+Приложение запустится на http://localhost:4200.  
+Бекенд ожидается на `http://localhost:8080` — прокси настроен в `proxy.conf.json`.
