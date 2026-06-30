@@ -33,7 +33,7 @@ public class SubscriptionService {
     private final NotificationService notificationService;
 
     public List<SubscriptionResponse> getMySubscriptions() {
-        return subscriptionRepository.findByUserId(currentUserProvider.getCurrentUserId())
+        return subscriptionRepository.findByUserIdAndCancelledAtIsNull(currentUserProvider.getCurrentUserId())
                 .stream().map(subscriptionMapper::toResponse).toList();
     }
 
@@ -71,10 +71,11 @@ public class SubscriptionService {
     @Transactional
     public void cancel(Integer id) {
         Subscription subscription = findSubscriptionOwnedByCurrentUser(id);
+        subscription.setCancelledAt(OffsetDateTime.now());
+        subscriptionRepository.save(subscription);
         createEvent(subscription, "cancelled", null);
         notificationService.createForUser(subscription.getUser(),
                 "Подписка на " + subscription.getPlan().getService().getName() + " отменена");
-        subscriptionRepository.delete(subscription);
     }
 
     public List<SubscriptionEventResponse> getEvents(Integer id) {
@@ -109,7 +110,7 @@ public class SubscriptionService {
     }
 
     private Subscription findSubscriptionOwnedByCurrentUser(Integer id) {
-        return subscriptionRepository.findByIdAndUserId(id, currentUserProvider.getCurrentUserId())
+        return subscriptionRepository.findByIdAndUserIdAndCancelledAtIsNull(id, currentUserProvider.getCurrentUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subscription not found"));
     }
 }

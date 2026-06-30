@@ -57,7 +57,7 @@ public class DeviceService {
     }
 
     public List<DeviceResponse> getBySubscription(Integer subscriptionId) {
-        subscriptionRepository.findByIdAndUserId(subscriptionId, currentUserProvider.getCurrentUserId())
+        subscriptionRepository.findByIdAndUserIdAndCancelledAtIsNull(subscriptionId, currentUserProvider.getCurrentUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subscription not found"));
         return subscriptionDeviceRepository.findBySubscriptionId(subscriptionId)
                 .stream()
@@ -67,7 +67,7 @@ public class DeviceService {
     }
 
     public void attachToSubscription(Integer subscriptionId, AttachDeviceRequest request) {
-        Subscription subscription = subscriptionRepository.findByIdAndUserId(
+        Subscription subscription = subscriptionRepository.findByIdAndUserIdAndCancelledAtIsNull(
                 subscriptionId, currentUserProvider.getCurrentUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subscription not found"));
         Device device = deviceRepository.findById(request.getDeviceId())
@@ -90,7 +90,7 @@ public class DeviceService {
     }
 
     public void detachFromSubscription(Integer subscriptionId, UUID deviceId) {
-        subscriptionRepository.findByIdAndUserId(subscriptionId, currentUserProvider.getCurrentUserId())
+        subscriptionRepository.findByIdAndUserIdAndCancelledAtIsNull(subscriptionId, currentUserProvider.getCurrentUserId())
                 .orElseThrow(() -> new ResourceNotFoundException("Subscription not found"));
         SubscriptionDeviceId id = new SubscriptionDeviceId(deviceId, subscriptionId);
         SubscriptionDevice sd = subscriptionDeviceRepository.findById(id)

@@ -16,6 +16,7 @@ public class SubscriptionMapper {
         response.setId(subscription.getId());
         response.setPlan(planMapper.toResponse(subscription.getPlan()));
         response.setAutoRenew(subscription.getAutoRenew());
+        response.setCancelledAt(subscription.getCancelledAt());
         return response;
     }
 }

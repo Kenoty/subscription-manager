@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.OffsetDateTime;
+
 @Entity
 @Table(name = "subscription", schema = "public")
 @Getter
@@ -33,4 +35,7 @@ public class Subscription {
 
     @Column(name = "auto_renew", nullable = false)
     private Boolean autoRenew;
+
+    @Column(name = "cancelled_at")
+    private OffsetDateTime cancelledAt;
 }
