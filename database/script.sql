@@ -54,7 +54,8 @@ CREATE TABLE subscription (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
     plan_id INT NOT NULL REFERENCES plan(id) ON DELETE RESTRICT,
-    auto_renew BOOLEAN NOT NULL DEFAULT TRUE
+    auto_renew BOOLEAN NOT NULL DEFAULT TRUE,
+    cancelled_at TIMESTAMPTZ
 );
 
 CREATE TABLE event_type (
@@ -72,7 +73,7 @@ CREATE TABLE subscription_event (
 
 CREATE TABLE payment (
     id SERIAL PRIMARY KEY,
-    event_id INT NOT NULL REFERENCES subscription_event(id) ON DELETE RESTRICT,
+    event_id INT NOT NULL REFERENCES subscription_event(id) ON DELETE CASCADE,
     amount NUMERIC(10,2) NOT NULL,
     currency VARCHAR(3) NOT NULL,
     paid_at TIMESTAMPTZ DEFAULT NOW()
