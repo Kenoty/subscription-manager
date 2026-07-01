@@ -15,7 +15,7 @@ Subscription Manager — платформа для управления подп
 | Backend | 24ч | 18ч | 20ч | 20,3ч           | 20ч                         |
 | React   | 16ч | 10ч | 14ч | 13,7ч           | 12ч                         |
 | Angular | 16ч | 10ч | 14ч | 13,7ч           | 13,5ч                       |
-| Docker  | -   | -   | -   | -               | -                           |
+| Docker  | 3ч  | 1ч  | 2ч  | 2ч              | 2ч                          |
 
 # Запуск jdbc/backend проекта
 
@@ -46,3 +46,16 @@ npm start
 
 Приложение запустится на http://localhost:4200.  
 Бекенд ожидается на `http://localhost:8080` — прокси настроен в `proxy.conf.json`.
+
+# Docker
+
+Для сборки проекта необходимо переименовать файл .env.example в .env и заполнить переменные окружения.
+
+## Адреса
+
+| Сервис          | URL                    |
+|-----------------|------------------------|
+| React           | http://localhost:3000  |
+| Angular         | http://localhost:4000  |
+| Backend API     | http://localhost:8080  |
+| PostgreSQL      | localhost:5432         |
